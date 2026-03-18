@@ -11,13 +11,7 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("CollegeSchedule")]
-[assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
-[assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+612b85b912bd1412d6d90f4eddac944e22d32da2")]
-[assembly: System.Reflection.AssemblyProductAttribute("CollegeSchedule")]
-[assembly: System.Reflection.AssemblyTitleAttribute("CollegeSchedule")]
-[assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
+[assembly: Microsoft.AspNetCore.Mvc.ApplicationParts.ApplicationPartAttribute("Microsoft.AspNetCore.OpenApi")]
 
 // Создано классом WriteCodeFragment MSBuild.
 
