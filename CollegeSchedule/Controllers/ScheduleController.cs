@@ -15,5 +15,16 @@ namespace CollegeSchedule.Controllers
             _service = service;
         }
 
+        //Get: api/schedule/group/{groupName}?start = 2026-01-12&end=2026-01-17
+        [HttpGet("group/{groupName}")]
+
+        public async Task<IActionResult> GetSchedule(string groupName, DateTime start, DateTime end)
+        {
+            //вызываем бизнес-логику из сервиса
+            var result = await _service.GetScheduleForGroup(groupName, start.Date, end.Date);
+            //возвращаем результат со статусом 200 ОК
+            return Ok(result);
+        }
+
     }
 }
