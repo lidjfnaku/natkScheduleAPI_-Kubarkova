@@ -1,10 +1,10 @@
 using CollegeSchedule.Data;
+using CollegeSchedule.Middlewares;
 using CollegeSchedule.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// === 1. ПОДКЛЮЧАЕМ БАЗУ ДАННЫХ ===
 DotNetEnv.Env.Load();
 var connectionString = $"Host={Environment.GetEnvironmentVariable("DB_HOST")};" +
                        $"Port={Environment.GetEnvironmentVariable("DB_PORT")};" +
@@ -15,18 +15,17 @@ var connectionString = $"Host={Environment.GetEnvironmentVariable("DB_HOST")};" 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connectionString));
 
-// === 2. ПОДКЛЮЧАЕМ НАШИ СЕРВИСЫ ===
 builder.Services.AddScoped<IScheduleService, ScheduleService>();
 builder.Services.AddControllers();
 
-// === 3. ПОДКЛЮЧАЕМ SWAGGER ===
 // Эти две строчки - самое главное для появления страницы
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// === 4. ВКЛЮЧАЕМ SWAGGER ===
+app.UseMiddleware<ExceptionMiddleware>();
+
 // Разрешаем использовать Swagger даже не в режиме разработки
 app.UseSwagger();
 app.UseSwaggerUI(c =>
@@ -35,7 +34,6 @@ app.UseSwaggerUI(c =>
     c.RoutePrefix = string.Empty; // <-- Это заставит его открываться по адресу http://localhost:7130/
 });
 
-// === 5. СТАНДАРТНЫЕ НАСТРОЙКИ ===
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
